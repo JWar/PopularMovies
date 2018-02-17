@@ -1,7 +1,5 @@
 package com.portfolio.udacity.android.popularmovies.data.repository;
 
-import android.support.annotation.NonNull;
-
 import com.portfolio.udacity.android.popularmovies.data.model.Movie;
 
 import java.util.List;
@@ -9,6 +7,7 @@ import java.util.List;
 /**
  * Created by JonGaming on 16/02/2018.
  * For ensuring Main and Detail Activity can access same data set.
+ * Not a strict 'repository' but really just used to ensure activity's can share data...
  */
 
 public class MovieRepository {

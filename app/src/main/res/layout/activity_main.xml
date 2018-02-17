@@ -7,8 +7,15 @@
     tools:context="com.portfolio.udacity.android.popularmovies.MainActivity">
 
     <GridView
+        android:layout_marginTop="@dimen/activity_main_gridview_spacing"
         android:id="@+id/main_activity_gv"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_height="match_parent"
+        android:numColumns="auto_fit"
+        android:columnWidth="@dimen/activity_main_gridview_column_width"
+        android:verticalSpacing="@dimen/activity_main_gridview_spacing"
+        android:horizontalSpacing="@dimen/activity_main_gridview_spacing"
+        android:stretchMode="columnWidth"
+        android:gravity="center"/>
 
 </RelativeLayout>

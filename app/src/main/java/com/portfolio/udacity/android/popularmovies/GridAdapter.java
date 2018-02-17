@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.GridView;
 import android.widget.ImageView;
 
 import com.portfolio.udacity.android.popularmovies.data.model.Movie;
@@ -21,7 +22,6 @@ import java.util.List;
  */
 
 public class GridAdapter extends ArrayAdapter<Movie> {
-    private static final String LOG_TAG = GridAdapter.class.getSimpleName();
     public GridAdapter(Context aContext, List<Movie> aMovies) {
         super(aContext,0,aMovies);
     }
@@ -36,12 +36,19 @@ public class GridAdapter extends ArrayAdapter<Movie> {
             );
         }
         ImageView imageView = convertView.findViewById(R.id.movies_item_poster_iv);
-        String url = "http://image.tmdb.org/t/p/w185/";
+        String url = NetworkUtils.IMAGE_URL;
         if (movie!=null) {
             url += movie.mPoster;
-            Picasso.with(getContext()).load(url).into(imageView);
+            Picasso.with(getContext())
+                    .load(url)
+                    //Hmm its crashes saying Resource Not Found Exception...
+                    .placeholder(R.drawable.ic_image_black_48px)
+                    .error(R.drawable.ic_error_black_48px)
+                    .resize(getContext().getResources().getDimensionPixelSize(R.dimen.movie_thumbnail_size),
+                            getContext().getResources().getDimensionPixelSize(R.dimen.movie_thumbnail_size))
+                    .into(imageView);
             imageView.setTag(position);
-            //Hmm should onclick be set here?
+            //180217_Hmm should onclick be set here? Anywhere else is can be set? Must be here..
             imageView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View aView) {
@@ -52,5 +59,6 @@ public class GridAdapter extends ArrayAdapter<Movie> {
         }
         return convertView;
     }
+
 
 }

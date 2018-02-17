@@ -17,15 +17,18 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
+import static com.portfolio.udacity.android.popularmovies.MainActivity.LOG_TAG;
+
 /**
  * Created by JonGaming on 16/02/2018.
  * Handles network stuff...
  */
 
 public class NetworkUtils {
-    private static final String TAG = "PopularMovies";
+
     private static final String DATA_URL = "http://api.themoviedb.org/3/movie/";
     private static final String API_KEY_QUERY = "api_key";
+    private static final String JSON_KEY_RESULTS = "results";
 
     public static final String TOP_RATED = "top_rated?";
     public static final String POPULAR = "popular?";
@@ -40,33 +43,37 @@ public class NetworkUtils {
         try {
             ArrayList<Movie> toReturn = new ArrayList<>();
             String result = getResponseFromHttpUrl(buildUrlWithSortOrder(aOrderBy));
-            JSONArray results = new JSONObject(result).getJSONArray("results");
+            JSONArray results = new JSONObject(result).getJSONArray(JSON_KEY_RESULTS);
             for (int i = 0; i < results.length(); i++) {
                 JSONObject movieObj = results.getJSONObject(i);
                 Movie movie = new Movie(
-                        movieObj.getInt("id"),
-                        movieObj.getString("title"),
-                        movieObj.getString("release_date"),
-                        movieObj.getString("poster_path"),
-                        movieObj.getString("vote_average"),
-                        movieObj.getString("overview")
+                        movieObj.optInt(Movie.ID),
+                        movieObj.optString(Movie.TITLE),
+                        movieObj.optString(Movie.RELEASE_DATE),
+                        movieObj.optString(Movie.POSTER_PATH),
+                        movieObj.optString(Movie.VOTE_AVERAGE),
+                        movieObj.optString(Movie.OVERVIEW)
                 );
                 toReturn.add(movie);
             }
             return toReturn;
         } catch (Exception e) {
             e.printStackTrace();
+            Log.i(LOG_TAG,"Error in NetworkUtils.getMoviesOrderBy: "+e.getLocalizedMessage());
             return null;
         }
     }
     private static URL buildUrlWithSortOrder(String aOrderBy) {
         String urlToParse = DATA_URL + aOrderBy;
+        if (API_KEY.equals("")) {
+            throw new RuntimeException("NetworkUtils.buildUrl needs API KEY");
+        }
         Uri uri = Uri.parse(urlToParse).buildUpon()
                 .appendQueryParameter(API_KEY_QUERY, API_KEY)
                 .build();
         try {
             URL url = new URL(uri.toString());
-            Log.i(TAG, "URL: " + url);
+            Log.i(LOG_TAG, "URL: " + url);
             return url;
         } catch (MalformedURLException e) {
             e.printStackTrace();
@@ -87,7 +94,7 @@ public class NetworkUtils {
                 response = scanner.next();
             }
             scanner.close();
-            Log.i(TAG, "HttpUrl response: " + response);
+//            Log.i(LOG_TAG, "HttpUrl response: " + response);
             return response;
         } finally {
             urlConnection.disconnect();

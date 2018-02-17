@@ -8,6 +8,15 @@ package com.portfolio.udacity.android.popularmovies.data.model;
  */
 
 public class Movie {
+
+    //JSON keys
+    public static final String ID = "id";
+    public static final String TITLE = "title";
+    public static final String RELEASE_DATE = "release_date";
+    public static final String POSTER_PATH = "poster_path";
+    public static final String VOTE_AVERAGE = "vote_average";
+    public static final String OVERVIEW = "overview";
+
     public int mId;
     public String mTitle;
     public String mReleaseDate;
