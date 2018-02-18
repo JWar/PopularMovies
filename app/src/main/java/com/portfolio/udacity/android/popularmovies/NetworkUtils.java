@@ -36,8 +36,7 @@ class NetworkUtils {
     //Default search by particular size of w185. Of course can put this as an append if needs be...
     static final String IMAGE_URL = "http://image.tmdb.org/t/p/w185/";
 
-    //TODO: Insert your key here. Also dont forget to avoid including this in a commit...
-    private static final String API_KEY = "";
+    private static final String API_KEY = BuildConfig.THE_MOVIE_DB_API_TOKEN;
 
     static synchronized List<Movie> getMoviesOrderBy(String aOrderBy) {
         try {
@@ -65,9 +64,6 @@ class NetworkUtils {
     }
     private static URL buildUrlWithSortOrder(String aOrderBy) {
         String urlToParse = DATA_URL + aOrderBy;
-        if (API_KEY.equals("")) {
-            throw new RuntimeException("NetworkUtils.buildUrl needs API KEY");
-        }
         Uri uri = Uri.parse(urlToParse).buildUpon()
                 .appendQueryParameter(API_KEY_QUERY, API_KEY)
                 .build();

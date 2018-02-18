@@ -6,6 +6,8 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.GridView;
+import android.widget.Toast;
+
 import com.portfolio.udacity.android.popularmovies.data.model.Movie;
 import com.portfolio.udacity.android.popularmovies.data.repository.MovieRepository;
 
@@ -93,18 +95,26 @@ public class MainActivity extends AppCompatActivity {
     public class GetMoviesAsync extends AsyncTask<String,Void,List<Movie>> {
         @Override
         protected List<Movie> doInBackground(String... aStrings) {
-            return NetworkUtils.getMoviesOrderBy(aStrings[0]);
+            try {
+                return NetworkUtils.getMoviesOrderBy(aStrings[0]);
+            } catch (Exception e) {
+                return null;
+            }
         }
 
         @Override
         protected void onPostExecute(List<Movie> aMovies) {
             super.onPostExecute(aMovies);
-            if (mMovieRepository!=null&&mGridView!=null) {
-                mMovieRepository.setMovies(aMovies);
-                //Ok to use getBaseContext? MainActivity.this?
-                GridAdapter gridAdapter = new GridAdapter(MainActivity.this,
-                        mMovieRepository.getMovies());
-                mGridView.setAdapter(gridAdapter);
+            if (aMovies==null) {
+                Toast.makeText(MainActivity.this, "Problem with getting movie list.", Toast.LENGTH_SHORT).show();
+            } else {
+                if (mMovieRepository != null && mGridView != null) {
+                    mMovieRepository.setMovies(aMovies);
+                    //Ok to use getBaseContext? MainActivity.this?
+                    GridAdapter gridAdapter = new GridAdapter(MainActivity.this,
+                            mMovieRepository.getMovies());
+                    mGridView.setAdapter(gridAdapter);
+                }
             }
         }
     }
