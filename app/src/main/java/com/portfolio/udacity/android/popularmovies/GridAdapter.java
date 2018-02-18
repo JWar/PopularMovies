@@ -1,6 +1,5 @@
 package com.portfolio.udacity.android.popularmovies;
 
-import android.app.Activity;
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -8,12 +7,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.GridView;
 import android.widget.ImageView;
-
 import com.portfolio.udacity.android.popularmovies.data.model.Movie;
 import com.squareup.picasso.Picasso;
-
 import java.util.List;
 
 /**
@@ -22,7 +18,7 @@ import java.util.List;
  */
 
 public class GridAdapter extends ArrayAdapter<Movie> {
-    public GridAdapter(Context aContext, List<Movie> aMovies) {
+    GridAdapter(Context aContext, List<Movie> aMovies) {
         super(aContext,0,aMovies);
     }
 

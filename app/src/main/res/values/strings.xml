@@ -12,4 +12,5 @@
     <string name="activity_detail_movie_vote_average">Movie Vote Average</string>
     <string name="activity_detail_movie_synopsis_header">Synopsis:</string>
     <string name="activity_detail_movie_synopsis">Movie Synopsis</string>
+
 </resources>

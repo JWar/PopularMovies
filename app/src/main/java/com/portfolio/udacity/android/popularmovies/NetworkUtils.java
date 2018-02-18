@@ -24,22 +24,22 @@ import static com.portfolio.udacity.android.popularmovies.MainActivity.LOG_TAG;
  * Handles network stuff...
  */
 
-public class NetworkUtils {
+class NetworkUtils {
 
     private static final String DATA_URL = "http://api.themoviedb.org/3/movie/";
     private static final String API_KEY_QUERY = "api_key";
     private static final String JSON_KEY_RESULTS = "results";
 
-    public static final String TOP_RATED = "top_rated?";
-    public static final String POPULAR = "popular?";
+    static final String TOP_RATED = "top_rated?";
+    static final String POPULAR = "popular?";
 
     //Default search by particular size of w185. Of course can put this as an append if needs be...
-    public static final String IMAGE_URL = "http://image.tmdb.org/t/p/w185/";
+    static final String IMAGE_URL = "http://image.tmdb.org/t/p/w185/";
 
     //TODO: Insert your key here. Also dont forget to avoid including this in a commit...
-    public static final String API_KEY = "";
+    private static final String API_KEY = "";
 
-    public static synchronized List<Movie> getMoviesOrderBy(String aOrderBy) {
+    static synchronized List<Movie> getMoviesOrderBy(String aOrderBy) {
         try {
             ArrayList<Movie> toReturn = new ArrayList<>();
             String result = getResponseFromHttpUrl(buildUrlWithSortOrder(aOrderBy));

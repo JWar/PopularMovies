@@ -3,13 +3,9 @@ package com.portfolio.udacity.android.popularmovies;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.AdapterView;
 import android.widget.GridView;
-
 import com.portfolio.udacity.android.popularmovies.data.model.Movie;
 import com.portfolio.udacity.android.popularmovies.data.repository.MovieRepository;
 
@@ -23,7 +19,7 @@ public class MainActivity extends AppCompatActivity {
     private GridView mGridView;
     private GetMoviesAsync mGetMoviesAsync;
     private static final String SORT_TYPE = "sortType";
-    private String mSortType=NetworkUtils.POPULAR;
+    private String mSortType;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,6 +27,8 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         if (savedInstanceState!=null) {
             mSortType=savedInstanceState.getString(SORT_TYPE);
+        } else {
+            mSortType=NetworkUtils.POPULAR;
         }
         //Async task to get movies???
         mMovieRepository = MovieRepository.getInstance();
@@ -53,8 +51,8 @@ public class MainActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.action_order_by_most_popular:
-                mSortType=NetworkUtils.POPULAR;
                 //Make new call to search by popular
+                mSortType=NetworkUtils.POPULAR;
                 mGetMoviesAsync = new GetMoviesAsync();
                 mGetMoviesAsync.execute(mSortType);
                 return true;
